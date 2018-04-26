@@ -151,7 +151,7 @@ public class UnityChanController : MonoBehaviour {
 			this.animator.SetBool ("isGround", isGround);
 //			this.transform.position.y -= 0.01f;
 //			transform.Translate (new Vector2(rigid2D.velocity.x, -0.01f));
-			transform.Translate (new Vector2(0s, -0.01f));
+			transform.Translate (new Vector2(0, -0.01f));
 
 			if (isGround == true) {
 				UniMode = 0;
