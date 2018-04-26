@@ -12,7 +12,7 @@ public class HashigController : MonoBehaviour {
 
 	private float downCount = 0;
 	private GameObject gameManager; //ゲームマネージャーを参照する
-
+	private GameObject LadderRoot; //Ladder Rootを参照する
 
 
 	//☆################☆################  Start  ################☆################☆
@@ -20,6 +20,7 @@ public class HashigController : MonoBehaviour {
 	void Start () {
 		//		audioSource = GetComponent<AudioSource> ();
 		gameManager = GameObject.Find ("GameManager");
+		LadderRoot = GameObject.Find ("Ladder Root");
 
 		// はしごを移動させる
 //		transform.Translate(0, -1, 0);

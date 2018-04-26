@@ -12,6 +12,9 @@ public class UIController : MonoBehaviour {
 	// 走行距離テキスト
 	private GameObject runLengthText;
 
+	// はしごボタン
+	private GameObject HashigoB;
+
 	// 走った距離
 	private float len = 0;
 
@@ -21,12 +24,32 @@ public class UIController : MonoBehaviour {
 	// ゲームオーバーの判定
 	private bool isGameOver = false;
 
+	GameObject unitychan; // Unityちゃんそのものが入る変数  
+	UnityChanController Uscript; // UnityChanControllerが入る変数
+
+	GameObject HashigoMaker;
+	RopeLadder2DController Rscript;
+
+	// ################################################################################
+	void Awake(){
+		this.HashigoB = GameObject.Find ("BtnCreateLadderStep");		
+	}
+
 	//☆################☆################  Start  ################☆################☆
 	// Use this for initialization
 	void Start () {
 		// シーンビューからオブジェクトの実体を検索する
 		this.gameOverText = GameObject.Find("GameOver");
 		this.runLengthText = GameObject.Find ("RunLength");
+
+		// 始めは、はしごボタンを非表示にする
+		HashigoB.SetActive (false);
+
+		unitychan = GameObject.Find ("UnityChan2D"); //Unityちゃんをオブジェクトの名前から取得して変数に格納する
+		Uscript = unitychan.GetComponent<UnityChanController>(); //unitychanの中にあるUnityChanControllerを取得して変数に格納する
+
+		HashigoMaker = GameObject.Find ("Ladder Root");
+		Rscript = HashigoMaker.GetComponent<RopeLadder2DController> ();
 	}
 
 
@@ -48,6 +71,26 @@ public class UIController : MonoBehaviour {
 				//GameSceneを読み込む
 				SceneManager.LoadScene("GameScene");
 			}
+		}
+
+		bool setHB = Uscript.callHashigoB;
+		if(setHB == true){
+			// 条件を満たしたら、はしごボタンを再表示する
+			HashigoB.SetActive (true);
+
+			// コインポイントを減算
+			Uscript.CoinPoint -= 10;
+
+			// コインポイントを表示
+			Uscript.pointText.GetComponent<Text> ().text =  Uscript.CoinPoint + "pt";
+		}
+
+
+		// Hボタン押下時にはしごを垂らす
+		if (Input.GetKey (KeyCode.H)) {
+			Rscript.CreateLadder ();
+			// はしごボタンを非表示する
+			HashigoB.SetActive (false);
 		}
 	}
 
