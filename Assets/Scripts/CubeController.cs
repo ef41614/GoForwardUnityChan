@@ -12,13 +12,10 @@ public class CubeController : MonoBehaviour {
 
 	private GameObject gameManager; //ゲームマネージャーを参照する
 
-//	public AudioClip block;			// 効果音：ブロックが[地面/他のブロック]の上に載った時の接触音
-//	private AudioSource audioSource;	// オーディオソース
 
 	//☆################☆################  Start  ################☆################☆
 	// Use this for initialization
 	void Start () {
-//		audioSource = GetComponent<AudioSource> ();
 		gameManager = GameObject.Find ("GameManager");
 	}
 
@@ -37,7 +34,6 @@ public class CubeController : MonoBehaviour {
 	//####################################  other  ####################################
 
 	// 衝突処理
-//	void OnTriggerEnter2D (Collider2D other) {
 	void OnCollisionEnter2D(Collision2D other) {
 		Debug.Log ("当たったよ");
 		if ( (other.gameObject.tag =="Cube")  || (other.gameObject.tag == "ground") ) {

@@ -30,6 +30,9 @@ public class UIController : MonoBehaviour {
 	GameObject HashigoMaker;
 	RopeLadder2DController Rscript;
 
+	GameObject GM;
+	GameManager GMscript;
+
 	// ################################################################################
 	void Awake(){
 		this.HashigoB = GameObject.Find ("BtnCreateLadderStep");		
@@ -50,6 +53,9 @@ public class UIController : MonoBehaviour {
 
 		HashigoMaker = GameObject.Find ("Ladder Root");
 		Rscript = HashigoMaker.GetComponent<RopeLadder2DController> ();
+
+		GM = GameObject.Find ("GameManager");
+		GMscript = GM.GetComponent<GameManager> ();
 	}
 
 
@@ -67,7 +73,7 @@ public class UIController : MonoBehaviour {
 		// ゲームオーバーになった場合
 		if(this.isGameOver){
 			// クリックされたらシーンをロードする
-			if(Input.GetMouseButtonDown(0)){
+			if ( (Input.anyKeyDown) || (Input.GetMouseButtonDown (0)) ) {
 				//GameSceneを読み込む
 				SceneManager.LoadScene("GameScene");
 			}
@@ -78,20 +84,20 @@ public class UIController : MonoBehaviour {
 			// 条件を満たしたら、はしごボタンを再表示する
 			HashigoB.SetActive (true);
 
-			// コインポイントを減算
-			Uscript.CoinPoint -= 10;
+			// 何かキーが押下されたら、はしごを垂らす
+			if ( (Input.anyKeyDown) || (Input.GetMouseButton (0)) ) {
+				Rscript.CreateLadder ();
 
-			// コインポイントを表示
-			Uscript.pointText.GetComponent<Text> ().text =  Uscript.CoinPoint + "pt";
+				// コインポイントを減算
+				Uscript.CoinPoint -= 10;
+				// コインポイントを表示
+				Uscript.pointText.GetComponent<Text> ().text = Uscript.CoinPoint + "pt";
+
+				// はしごボタンを非表示する
+				HashigoB.SetActive (false);
+			}
 		}
 
-
-		// Hボタン押下時にはしごを垂らす
-		if (Input.GetKey (KeyCode.H)) {
-			Rscript.CreateLadder ();
-			// はしごボタンを非表示する
-			HashigoB.SetActive (false);
-		}
 	}
 
 	//####################################  other  ####################################
@@ -99,7 +105,9 @@ public class UIController : MonoBehaviour {
 			// ゲームオーバーになったときに、画面上にゲームオーバーを表示する
 			this.gameOverText.GetComponent<Text>().text = "GameOver";
 			this.isGameOver = true;
+			GMscript.GameOver ();
 		}
+		
 	//#################################################################################
 
 }

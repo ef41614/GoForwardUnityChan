@@ -6,41 +6,52 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	public AudioClip block;			// 効果音：ブロックが[地面/他のブロック]の上に載った時の接触音
+	public AudioClip gameoverSE;
+	public AudioClip popSE;      // 効果音：踏みつけ
+	public AudioClip damage;      // 効果音：ダメージ
+	public AudioClip getCoin;      // 効果音：コインを取った時のSE
 	private AudioSource audioSource;	// オーディオソース
-//	private GameObject gameManager; //ゲームマネージャーを参照する
-	//cornPrefabを入れる
-	public GameObject conePrefab;
-	//Unityちゃんのオブジェクト
-	private GameObject unitychan;
+
 
 	//☆################☆################  Start  ################☆################☆
 	// Use this for initialization
 	void Start () {
 		//オーディソース取得
 		audioSource = this.gameObject.GetComponent<AudioSource>();
-//		gameManager = GameObject.Find ("GameManager");
-		Debug.Log ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■スタートするぜ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		//Unityちゃんのオブジェクトを取得
-		this.unitychan = GameObject.Find("UnityChan2D");
+
+		Debug.Log ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ ゲーム スタート ！！■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+
 	}
-
-
+		
 	//####################################  Update  ###################################
 	// Update is called once per frame
 	void Update () {
-
-		// もしはしごボタンを押したら、ボタンを非表示にする
-//		if(){
-//			// 
-//		}
-			
 
 	}
 
 	//####################################  other  ####################################
 	public void PutCube(){
 		audioSource.PlayOneShot (block);
-		Debug.Log ("鳴らしたよ");
+	}
+
+	public void popEnemy(){
+		audioSource.PlayOneShot (popSE);
+		Debug.Log ("敵を踏んだよ");
+	}
+
+	public void hitEnemy(){
+		audioSource.PlayOneShot (damage);
+		Debug.Log ("アウチいー");
+	}
+
+	public void GetCoin(){
+		audioSource.PlayOneShot (getCoin);
+		Debug.Log ("取ったどー");
+	}
+
+	public void GameOver(){
+		audioSource.PlayOneShot (gameoverSE);
+		Debug.Log ("ゲームオーバー...そんなあ");
 	}
 	//#################################################################################
 

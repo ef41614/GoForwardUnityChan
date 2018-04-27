@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class HeliController : MonoBehaviour {
 
-	// はしごのPrefab
-	public GameObject HashigoSetPrefab;
-
 	// はしごロープのPrefab
 	public GameObject RopePrefab;
 
@@ -15,26 +12,12 @@ public class HeliController : MonoBehaviour {
 	private GameObject Ladder2;
 	private GameObject Ladder3;
 
-	public GameObject Heli1;
-	private GameObject Obj;
-
 	private bool setRope = false;
 
 	// 時間計測用の変数
 	private float delta = 0;
 
-	// はしごの生成位置オフセット（Y）
-	private float offsetY = 15.3f;
-	// はしごの縦方向の間隔
-	private float spaceY = -2.7f;
-
-
 	private float startLine = -7f;
-	public enum FLY_KIND{	//飛行状態の種類を定義
-		HOVERING, //停止
-		ADVANCE,  //前進
-		RETREAT,  //後退
-	}
 
 	GameObject unitychan; // Unityちゃんそのものが入る変数  
 	UnityChanController Uscript; // UnityChanControllerが入る変数
@@ -55,14 +38,16 @@ public class HeliController : MonoBehaviour {
 		float speed = 0.5f;
 		transform.position = new Vector2 (transform.position.x, 4f + Mathf.Sin (Time.time * speed) * 0.5f);
 
-		// ヘリがAボタン押下時に前進する
-//		if (Input.GetKey (KeyCode.A)) {
+		// Unityちゃんがはしごにつかまっている時、ヘリが前進する
 		if (Uscript.UniMode == 1) {
 			transform.position += new Vector3 (1.5f * Time.deltaTime, 0, 0);
+			GetComponent<AudioSource> ().volume = 1;
+		} else {
+			GetComponent<AudioSource> ().volume = 0;
 		}
 
 
-		// 強制的にヘリコプターを後ろに下げる（Aボタンが押されていない時＆＆スタートラインより前進している場合）
+		// 強制的にヘリコプターを後ろに下げる（スタートラインより前進している場合）
 		if (startLine < transform.position.x) {
 			transform.position += new Vector3 (-0.7f * Time.deltaTime, 0, 0);
 		}
